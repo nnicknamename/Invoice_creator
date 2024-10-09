@@ -1,0 +1,234 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wile E. Invoice
+% Structural Definitions
+% Version 1.0 (17/8/18)
+%
+% This template was downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Peter Morrison-Whittle
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	REQUIRED PACKAGES AND MISC CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage{graphicx} % Required for including images
+
+\usepackage{tabularx}
+\usepackage[
+	a4paper, % Change to letterpaper for US Letter
+	top=2.5cm, 
+	bottom=2.5cm, 
+	left=2.5cm, 
+	right=2.5cm
+]{geometry} % Document margins
+
+\usepackage{fp} % Required for invoice calculations
+
+\usepackage[group-separator={,},group-minimum-digits=4, detect-all]{siunitx} % Required for automatically adding commas to large numbers, delimitting for 4 digits (e.g. 1,000) and using the current font
+
+\usepackage{advdate} % Required for date calculation
+
+\setlength\parindent{0pt} % Stop paragraph indentation
+
+%----------------------------------------------------------------------------------------
+%	FONTS
+%----------------------------------------------------------------------------------------
+
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+
+\usepackage{tgadventor} % Use the TeX Gyre Adventor font
+\renewcommand*\familydefault{\sfdefault} % Set the base font of the document to sans serif
+
+%----------------------------------------------------------------------------------------
+%	COLOURS
+%----------------------------------------------------------------------------------------
+
+\usepackage{xcolor} % Required for defining and using custom colours
+
+\definecolor{highlightcolour}{HTML}{DF0174} % Colour used for making text stand out
+\definecolor{rulecolour}{HTML}{B2BEB5} % Colour used for rules
+
+%----------------------------------------------------------------------------------------
+%	TABLES
+%----------------------------------------------------------------------------------------
+
+\usepackage{colortbl} % Required for colouring table cells (used for rules)
+
+\usepackage{booktabs} % Required for nicer table rules
+
+\usepackage{multirow} % Required for allowing cells to take up multiple rows in tables
+
+\usepackage{array} % Required for customizing table spacing and features
+\def\arraystretch{1.2} % Table row spacing, 1 is the default
+
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}} % Define a fixed-width right-aligned column type
+
+%----------------------------------------------------------------------------------------
+%	CUSTOM COMMANDS
+%----------------------------------------------------------------------------------------
+% Entreprise info 
+\newcommand{\Entreprise}[1]{\renewcommand{\Entreprise}{#1}}
+\newcommand{\EAdresse}[1]{\renewcommand{\EAdresse}{#1}}
+\newcommand{\ETel}[1]{\renewcommand{\ETel}{#1}}
+\newcommand{\ERC}[1]{\renewcommand{\ERC}{#1}}
+\newcommand{\ENIF}[1]{\renewcommand{\ENIF}{#1}}
+\newcommand{\EAI}[1]{\renewcommand{\EAI}{#1}}
+\newcommand{\ERIB}[1]{\renewcommand{\ERIB}{#1}}
+
+% Client info 
+\newcommand{\Destinataire}[1]{\renewcommand{\Destinataire}{#1}}
+\newcommand{\DAdresse}[1]{\renewcommand{\DAdresse}{#1}}
+\newcommand{\DTel}[1]{\renewcommand{\DTel}{#1}}
+\newcommand{\DRC}[1]{\renewcommand{\DRC}{#1}}
+\newcommand{\DNIF}[1]{\renewcommand{\DNIF}{#1}}
+\newcommand{\DAI}[1]{\renewcommand{\DAI}{#1}}
+\newcommand{\DRIB}[1]{\renewcommand{\DRIB}{#1}}
+
+\newcommand{\invoiceref}[1]{\renewcommand{\invoiceref}{#1}}
+\newcommand{\invoiceissued}[1]{\renewcommand{\invoiceissued}{#1}}
+\newcommand{\invoicedue}[1]{\renewcommand{\invoicedue}{#1}}
+\newcommand{\projectname}[1]{\renewcommand{\projectname}{#1}}
+\newcommand{\amount}[1]{\renewcommand{\amount}{#1}}
+
+\newcommand{\companylogo}[1]{\renewcommand{\companylogo}{#1}}
+\newcommand{\sendername}[1]{\renewcommand{\sendername}{#1}}
+\newcommand{\senderjob}[1]{\renewcommand{\senderjob}{#1}}
+\newcommand{\senderaddresslineone}[1]{\renewcommand{\senderaddresslineone}{#1}}
+\newcommand{\senderaddresslinetwo}[1]{\renewcommand{\senderaddresslinetwo}{#1}}
+\newcommand{\sendercontactlineone}[1]{\renewcommand{\sendercontactlineone}{#1}}
+\newcommand{\sendercontactlinetwo}[1]{\renewcommand{\sendercontactlinetwo}{#1}}
+
+\newcommand{\termsandconditions}[1]{\renewcommand{\termsandconditions}{#1}}
+
+%------------------------------------------------
+
+\newcommand{\taxrate}[1]{\renewcommand{\taxrate}{#1}} % Tax rate used to automatically calculate tax
+
+%----------------------------------------------------------------------------------------
+%	INVOICE TABLES \textbf{}
+%----------------------------------------------------------------------------------------
+
+% Payee information (top table)
+\newcommand{\invoicedtotable}{
+	{
+		\footnotesize
+    \begin{tabularx}{\textwidth}{r X r X}
+			\arrayrulecolor{rulecolour}\toprule[0.5pt] % Horizontal line at the top of the table
+      \textbf{Entreprise:}&\Entreprise  & \textbf{Déstinataire:}&\Destinataire \\
+      \textbf{Adresse}:&    \EAdresse    & \textbf{Adresse:}& \DAdresse \\
+			\textbf{Tel:} &       \ETel        & \textbf{Tel:}&  \DTel \\
+			\textbf{RC:} &        \ERC         & \textbf{RC:}&   \DRC \\
+			\textbf{NIF:} &       \ENIF        & \textbf{NIF:}&  \DNIF \\
+			\textbf{AI:} &        \EAI         & \textbf{AI:}&   \DAI \\
+			\textbf{RIB:} &       \ERIB        & \textbf{RIB:}&  \DRIB \\
+			\arrayrulecolor{rulecolour}\bottomrule[0.5pt] % Horizontal line at the bottom of the table
+		\end{tabularx}
+	}
+}
+
+%------------------------------------------------
+
+% Invoice information table
+\newcommand{\invoiceinformation}{
+	{
+		\footnotesize
+		\begin{tabularx}{\textwidth}{X X X X}
+			\textbf{Invoice Number} & \textbf{Date} & \textbf{Payment Due} & \textbf{Project Name} \\
+			\arrayrulecolor{rulecolour}\toprule[0.5pt] % Horizontal line
+			\invoiceref & \invoiceissued & \invoicedue & \projectname \\
+		\end{tabularx}
+	}
+}
+
+%------------------------------------------------
+
+% Invoice items table
+\newenvironment{invoicetable}
+{
+	\begin{tabular}{p{0.225\textwidth} p{0.225\textwidth} R{0.15\textwidth} R{0.15\textwidth} R{0.15\textwidth}}
+		\textbf{Task} &\textbf{Desription} & \textbf{Quantité} & \textbf{PU} & \textbf{Total TTV} \\
+		\arrayrulecolor{rulecolour}\toprule[0.5pt]
+}{
+	\end{tabular}
+}
+
+\newcommand{\separator}{
+\arrayrulecolor{rulecolour}\toprule[0.5pt]
+}
+%------------------------------------------------
+
+% Terms and conditions and total amount due table
+\newcommand{\amountdue}{
+	{
+		\footnotesize
+    	\begin{tabularx}{\textwidth}{X l}
+			\textbf{Arrêté de la présente facture à la somme de:} & \textbf{Total TTC} \\
+			\arrayrulecolor{rulecolour}\toprule[0.5pt]\\[-1.25em] % Horizontal line at the top of the table
+			\termsandconditions & {\color{highlightcolour} \Huge \num{\amount}}\\
+		\end{tabularx}
+	}
+}
+
+%------------------------------------------------
+
+% Sender contact details table
+\newcommand{\contactdetails}{
+	{
+		\footnotesize
+    \begin{tabularx}{\textwidth}{X X X l}
+			\arrayrulecolor{rulecolour}\toprule[0.5pt] % Horizontal line at the top of the table
+			\textbf{Sender} & & & \multirow{3}{0.22\textwidth}{\hfill{\color{highlightcolour}\Huge THANKS}}\\
+			 & \senderaddresslineone & \sendercontactlineone & \\
+			\senderjob & \senderaddresslinetwo & \sendercontactlinetwo & \\
+			\arrayrulecolor{rulecolour}\bottomrule[0.5pt] % Horizontal line at the bottom of the table
+		\end{tabularx}
+	}
+}
+
+%----------------------------------------------------------------------------------------
+%	INVOICE ITEM LINES
+%----------------------------------------------------------------------------------------
+
+\newcommand{\starttax}{
+	\\ [-1em] % Reduce whitespace before the totals
+}
+
+\newcommand{\taxitem}[2]{
+    &&& \textbf{#1} & \num{#2} \\
+}
+
+\newcommand{\invoiceitem}[5]{
+	#1 & #2 & \num{#3} & \num{#4} & \num{#5} \\
+}
+
+%----------------------------------------------------------------------------------------
+%	INVOICE ENVIRONMENT
+%----------------------------------------------------------------------------------------
+
+\newenvironment{invoice}{
+  \thispagestyle{empty} % Suppress headers and footers
+
+  \includegraphics[width=0.333\textwidth]{\companylogo}
+	
+	% \vspace{1cm} % Whitespace before the payee information
+	
+	\invoicedtotable % Payee table (whom the invoice is addressed to)
+  
+	\vspace{0.5cm} % Whitespace before the payee information
+	\invoiceinformation % Invoice information table
+	\vfill
+}{ 
+	\vfill
+	\amountdue % Terms and conditions and total amount due table
+	\vfill
+	%\contactdetails % Contact details table
+}

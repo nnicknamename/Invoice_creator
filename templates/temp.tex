@@ -1,0 +1,36 @@
+\documentclass[12pt]{article}
+
+\input{structure.tex}
+
+\invoiceref{8/24}
+\invoiceissued{08/10/2024}
+\invoicedue{08/10/2024}
+\projectname{asdfsdc}
+\companylogo{C:/Users/pc/Documents/programming/personal_projects/invoice_creator/templates/logoSmaller.png}
+\amount{74520.0}
+
+\Entreprise{PRISgazouz1}\EAdresse{testadrs}\ETel{012384712}\ERC{r10238947}\ENIF{n239148239}\EAI{a2391847239}\ERIB{123148976234897}
+\Destinataire{PRISMA1}\DAdresse{aaaa}\DTel{12384712}\DRC{r10238947}\DNIF{n2391482391}\DAI{a2391847239}\DRIB{123148976234897}
+\termsandconditions{soixante-quatorze mille cinq cent vingt}
+
+\begin{document}
+  \begin{invoice}
+    \begin{invoicetable}
+      \invoiceitem{Animation}{four}{1}{7000}{7000.0}
+\separator
+\invoiceitem{Modeling beach}{three}{1}{7000}{7000.0}
+\separator
+\invoiceitem{Modeling buildings}{one}{2}{10000}{20000.0}
+\separator
+\invoiceitem{Modeling environment}{two }{1}{5000}{5000.0}
+\separator
+\invoiceitem{Track}{test}{1}{15000}{15000.0}
+\invoiceitem{}{second task}{1}{15000}{15000.0}
+\separator
+\starttax
+\taxitem{Total HT}{69000.0}
+\taxitem{asdce}{5520.0}
+
+    \end{invoicetable}
+  \end{invoice}
+\end{document}

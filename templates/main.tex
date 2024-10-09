@@ -1,0 +1,22 @@
+\documentclass[12pt]{article}
+
+\input{structure.tex}
+
+\invoiceref{#INVOICE_REF}
+\invoiceissued{#DATE}
+\invoicedue{#DUE_DATE}
+\projectname{#PROJECT_NAME}
+\companylogo{#LOGO_PATH}
+\amount{#AMOUNT}
+
+#COMPANY_INFO
+#CLIENT_INFO
+\termsandconditions{#TERMS_CONDITIONS}
+
+\begin{document}
+  \begin{invoice}
+    \begin{invoicetable}
+      #INVOICE_ITEMS
+    \end{invoicetable}
+  \end{invoice}
+\end{document}

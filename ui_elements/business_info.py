@@ -1,8 +1,7 @@
 from ui_elements.ui_templates.actor_info_template import Ui_Form
 from .data_models import  Business_data_model
 from .utils import *
-from PyQt6.QtWidgets import QHeaderView,QWidget,QErrorMessage
-from PyQt6
+from PyQt6.QtWidgets import QHeaderView,QWidget,QMessageBox
 
 
 class Business_info(QWidget):
@@ -21,7 +20,7 @@ class Business_info(QWidget):
 
     def _load_table_data(self,table,data_path:str):
         data=read_data_file(data_path)
-        if data is None:
+        if data is None or not Business_data_model.validate(data):
             return None
         dm=Business_data_model(data,data_path)
         table.setModel(dm)
@@ -30,17 +29,17 @@ class Business_info(QWidget):
     def get_data(self):
         if self.data_model is not None:
             assert self.data_model._data.shape==(7,2)
-            return {row.iloc[0]:row.iloc[1]  for a,row in self.data_model._data.iterrows()}
+            return {row.iloc[0]:row.iloc[1]  for _,row in self.data_model._data.iterrows()}
 
     def load(self):
         files=file_dialog(self,f"open {self.actor_name} info file","Data files (*.csv *.json)")
         if isinstance(files,list):
             data_model=self._load_table_data(self.ui.info_table,files[0])
             if data_model is None:
-                QErrorMessage(self).showMessage("The provided file is not a valid Business info file.")
+                QMessageBox.critical(self,"File error","The provided Business data file is not valid.")
             else:
                 self.data_model=data_model
-            self._table_set_look(self.ui.info_table)
+                self._table_set_look(self.ui.info_table)
 
     def save(self):
         if self.data_model is not None:

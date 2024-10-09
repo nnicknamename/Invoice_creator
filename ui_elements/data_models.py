@@ -43,6 +43,13 @@ class Clients_data_model(QAbstractTableModel):
         self.row=row
         self.data_changed=False
     
+    @classmethod
+    def validate(cls,data:pd.DataFrame):
+        for c in data.columns:
+            if not c in ["NAME","ADRESS","TEL","RC","NIF","AI","RIB"]:
+                return False
+        return True
+
     def rowCount(self, parent: QModelIndex = ...) -> int:
         return self._data.iloc[self.row].transpose().shape[0]
 
@@ -84,6 +91,10 @@ class Business_data_model(Actor_data_model):
     def __init__(self, data: pd.DataFrame,path):
         self.path=path
         super().__init__(data)
+
+    @classmethod
+    def validate(cls,data:pd.DataFrame):
+        return data.columns.to_list()==["Field","value"]
 
     def save(self):
         self._data.to_csv(self.path,index=False)

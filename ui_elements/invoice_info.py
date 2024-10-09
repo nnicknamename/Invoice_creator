@@ -52,14 +52,16 @@ class Invoice_info(QWidget):
             self.data_model=data_model
 
     def delete_selected(self):
-        self.data_model.delete_rows(self.ui.info_table.selectionModel().selectedRows())
-        self.update()
+        if self.data_model is not None:
+            self.data_model.delete_rows(self.ui.info_table.selectionModel().selectedRows())
+            self.update()
     
     def add_row(self):
-        selection=self.ui.info_table.selectionModel().selectedRows()
-        below= not QtWidgets.QApplication.keyboardModifiers()
-        self.data_model.add_row([r.row() for r in selection],below)
-        self.update()
+        if self.data_model is not None:
+            selection=self.ui.info_table.selectionModel().selectedRows()
+            below= not QtWidgets.QApplication.keyboardModifiers()
+            self.data_model.add_row([r.row() for r in selection],below)
+            self.update()
 
     def update_total(self,total):
         self.main_window.set_total(total)
